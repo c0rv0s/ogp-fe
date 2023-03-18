@@ -26,6 +26,11 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  transition: color 0.15s ease;
+}
+
+.footer a:hover {
+  color: gray;
 }
 
 .title a {
@@ -57,11 +62,14 @@
 }
 
 .grid {
-  display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  border: rgba(128, 128, 128, 0.442) 1px solid;
+  border-radius: 15%;
+  padding: 25px 55px;
 }
 
 .card {
@@ -99,4 +107,30 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.grid input {
+  width: 150px;
+  padding: 12px 20px;
+  margin: 6px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+.grid button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  margin: 12px 0;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  transition: all 0.15s ease;
+}
+
+.grid button:hover {
+  background-color: #45a049;
 }

@@ -1,9 +1,33 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { utils } from "ethers";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import {
+  useAccount,
+  useContractWrite,
+  useNetwork,
+  usePrepareContractWrite,
+} from "wagmi";
+import { abi, contractAddress, mintPrice } from "../src/contract";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const [amount, setAmount] = useState(1);
+
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+  const { config } = usePrepareContractWrite({
+    address: contractAddress(chain?.name),
+    abi,
+    functionName: "mint",
+    args: [address, amount],
+    overrides: {
+      value: utils.parseEther(mintPrice(chain?.name)).mul(amount),
+    },
+  });
+  const { isLoading, isSuccess, isError, write } = useContractWrite(config);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,63 +42,50 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <ConnectButton />
 
-        <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
-          <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>OG Potheads</h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          OG Potheads is a community of OG Potheads who are OG Potheads.
+          <br />
+          Mint one of our OG Pothead NFTs and become an OG Pothead.
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="https://rainbowkit.com">
-            <h2>RainbowKit Documentation &rarr;</h2>
-            <p>Learn how to customize your wallet connection flow.</p>
-          </a>
-
-          <a className={styles.card} href="https://wagmi.sh">
-            <h2>wagmi Documentation &rarr;</h2>
-            <p>Learn how to interact with Ethereum.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/rainbow-me/rainbowkit/tree/main/examples"
-          >
-            <h2>RainbowKit Examples &rarr;</h2>
-            <p>Discover boilerplate example RainbowKit projects.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Next.js Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-          >
-            <h2>Next.js Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <p>Pick an amount</p>
+          <input
+            type="number"
+            placeholder="5"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            min={1}
+            max={20}
+          />
+          <br />
+          <button disabled={!write || isLoading} onClick={() => write?.()}>
+            Mint
+          </button>
+          {isLoading && <p>Minting...</p>}
+          {isSuccess && <p>Minted!</p>}
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://rainbow.me" rel="noopener noreferrer" target="_blank">
-          Made with ❤️ by your frens at 🌈
+        <a
+          href="http://ogpothead.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          By the OG Pothead
+        </a>
+        |
+        <a
+          href={`${
+            chain?.blockExplorers?.default.url
+          }/address/${contractAddress(chain?.name)}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Etherscan
         </a>
       </footer>
     </div>
