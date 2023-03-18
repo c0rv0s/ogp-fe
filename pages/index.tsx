@@ -1,5 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { utils } from "ethers";
+import { constants, utils } from "ethers";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -10,11 +10,12 @@ import {
   useNetwork,
   usePrepareContractWrite,
 } from "wagmi";
-import { abi, contractAddress, mintPrice } from "../src/contract";
+import { abi, contractAddress, mintPrice, isTest } from "../src/contract";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const { address } = useAccount();
   const { chain } = useNetwork();
@@ -29,9 +30,15 @@ const Home: NextPage = () => {
   });
   const { isLoading, isSuccess, isError, write } = useContractWrite(config);
 
-  const isTest =
-    chain?.name != goerli.name &&
-    process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
+  const [etherscsanUrl, setEtherscan] = useState("");
+  useEffect(() => {
+    setTotalPrice(Number(mintPrice(chain?.name ?? goerli.name)) * amount);
+    setEtherscan(
+      chain?.blockExplorers?.default.url +
+        "/address/" +
+        contractAddress(chain?.name)
+    );
+  }, [amount, chain]);
 
   return (
     <div className={styles.container}>
@@ -56,7 +63,7 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <h4>Pick an amount</h4>
+          <h4>Enter an amount</h4>
           <input
             type="number"
             placeholder="5"
@@ -66,13 +73,18 @@ const Home: NextPage = () => {
             max={20}
           />
           <br />
+          <p>
+            Total Price: {totalPrice.toFixed(4)} {constants.EtherSymbol}
+          </p>
           <button
             disabled={!write || isLoading || chain?.id != 5}
             onClick={() => write?.()}
           >
             Mint
           </button>
-          {isTest && <p className={styles.error}>Please switch network to Goerli</p>}
+          {isTest && chain && chain?.id !== goerli.id && (
+            <p className={styles.error}>Please switch network to Goerli</p>
+          )}
           {isLoading && <p>Minting...</p>}
           {isSuccess && <p>Minted!</p>}
         </div>
@@ -87,14 +99,20 @@ const Home: NextPage = () => {
           By the OG Pothead
         </a>
         |
+        <a href={etherscsanUrl} rel="noopener noreferrer" target="_blank">
+          Etherscan
+        </a>
+        |
         <a
-          href={`${
-            chain?.blockExplorers?.default.url
-          }/address/${contractAddress(chain?.name)}`}
+          href={
+            isTest
+              ? "https://testnets.opensea.io/collection/og-potheads"
+              : "https://opensea.io/collection/og-potheads"
+          }
           rel="noopener noreferrer"
           target="_blank"
         >
-          Etherscan
+          OpenSea
         </a>
       </footer>
     </div>

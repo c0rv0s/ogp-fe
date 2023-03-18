@@ -1,5 +1,7 @@
 import { goerli } from "wagmi";
 
+export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === goerli.name
     ? "0x2814Aba692680c10b936028C724e821B44cB13A1"

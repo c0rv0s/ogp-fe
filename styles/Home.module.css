@@ -132,8 +132,7 @@
 }
 
 .grid button:disabled {
-  background-color: red;
-
+  background-color: gray;
   cursor: not-allowed;
 }
 
