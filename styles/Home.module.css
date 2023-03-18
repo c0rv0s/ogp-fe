@@ -121,7 +121,7 @@
 }
 
 .grid button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin: 12px 0;
@@ -131,6 +131,16 @@
   transition: all 0.15s ease;
 }
 
-.grid button:hover {
+.grid button:disabled {
+  background-color: red;
+
+  cursor: not-allowed;
+}
+
+.grid button:hover:enabled {
   background-color: #45a049;
+}
+
+.error {
+  color: red;
 }

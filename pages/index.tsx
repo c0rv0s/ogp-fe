@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
+  goerli,
   useAccount,
   useContractWrite,
   useNetwork,
@@ -28,6 +29,10 @@ const Home: NextPage = () => {
   });
   const { isLoading, isSuccess, isError, write } = useContractWrite(config);
 
+  const isTest =
+    chain?.name != goerli.name &&
+    process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
+
   return (
     <div className={styles.container}>
       <Head>
@@ -51,7 +56,7 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <p>Pick an amount</p>
+          <h4>Pick an amount</h4>
           <input
             type="number"
             placeholder="5"
@@ -61,9 +66,13 @@ const Home: NextPage = () => {
             max={20}
           />
           <br />
-          <button disabled={!write || isLoading} onClick={() => write?.()}>
+          <button
+            disabled={!write || isLoading || chain?.id != 5}
+            onClick={() => write?.()}
+          >
             Mint
           </button>
+          {isTest && <p className={styles.error}>Please switch network to Goerli</p>}
           {isLoading && <p>Minting...</p>}
           {isSuccess && <p>Minted!</p>}
         </div>
