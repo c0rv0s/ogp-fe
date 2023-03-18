@@ -4,8 +4,8 @@ export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === goerli.name
-    ? "0x2814Aba692680c10b936028C724e821B44cB13A1"
-    : "0x2814Aba692680c10b936028C724e821B44cB13A1";
+    ? "0xC1f63f716cCAf5494d4cecD62632423b59A3379e"
+    : "0xC1f63f716cCAf5494d4cecD62632423b59A3379e";
 
 export const mintPrice = (network?: string) =>
   !network || network === goerli.name ? "0.0001" : "0.42";
