@@ -12,6 +12,7 @@ import {
 } from "wagmi";
 import { abi, contractAddress, mintPrice, isTest } from "../src/contract";
 import styles from "../styles/Home.module.css";
+import JSConfetti from "js-confetti";
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState(1);
@@ -28,8 +29,10 @@ const Home: NextPage = () => {
       value: utils.parseEther(mintPrice(chain?.name)).mul(amount),
     },
   });
-  const { isLoading, isSuccess, isError, write } = useContractWrite(config);
+  const { isLoading, isSuccess, isError, write, data } =
+    useContractWrite(config);
 
+  // etherscan url
   const [etherscsanUrl, setEtherscan] = useState("");
   useEffect(() => {
     setTotalPrice(Number(mintPrice(chain?.name ?? goerli.name)) * amount);
@@ -39,6 +42,20 @@ const Home: NextPage = () => {
         contractAddress(chain?.name)
     );
   }, [amount, chain]);
+
+  // tx completed
+  const [completed, setCompleted] = useState(false);
+  useEffect(() => {
+    const _async = async () => {
+      if (isSuccess) {
+        await data?.wait();
+        setCompleted(true);
+        const jsConfetti = new JSConfetti();
+        jsConfetti.addConfetti();
+      }
+    };
+    _async();
+  }, [isSuccess]);
 
   return (
     <div className={styles.container}>
@@ -85,8 +102,15 @@ const Home: NextPage = () => {
           {isTest && chain && chain?.id !== goerli.id && (
             <p className={styles.error}>Please switch network to Goerli</p>
           )}
-          {isLoading && <p>Minting...</p>}
-          {isSuccess && <p>Minted!</p>}
+          {isSuccess ? (
+            completed ? (
+              <p>Minted!</p>
+            ) : (
+              <p>Minting...</p>
+            )
+          ) : isError ? (
+            <p className={styles.error}>Error: Something went wrong</p>
+          ) : null}
         </div>
       </main>
 
