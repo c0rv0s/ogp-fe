@@ -130,7 +130,7 @@ const Home: NextPage = () => {
         <a
           href={
             isTest
-              ? "https://testnets.opensea.io/collection/og-potheads-1"
+              ? "https://testnets.opensea.io/collection/og-potheads-2"
               : "https://opensea.io/collection/og-potheads"
           }
           rel="noopener noreferrer"
