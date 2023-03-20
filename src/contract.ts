@@ -1,6 +1,6 @@
 import { goerli } from "wagmi";
 
-export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === goerli.name
@@ -34,12 +34,22 @@ export const abi = [
   },
   {
     inputs: [],
+    name: "BadRarity",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "BelowPrice",
     type: "error",
   },
   {
     inputs: [],
     name: "NotAdmin",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotElections",
     type: "error",
   },
   {
@@ -63,6 +73,25 @@ export const abi = [
     ],
     name: "TokenIdNotFound",
     type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "admin",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "status",
+        type: "bool",
+      },
+    ],
+    name: "AdminStatus",
+    type: "event",
   },
   {
     anonymous: false,
@@ -120,6 +149,31 @@ export const abi = [
       {
         indexed: true,
         internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "LegendaryTransfer",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "to",
         type: "address",
       },
@@ -137,6 +191,45 @@ export const abi = [
       },
     ],
     name: "MintVaulted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "baseUri",
+        type: "string",
+      },
+    ],
+    name: "SetBaseURI",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "elections",
+        type: "address",
+      },
+    ],
+    name: "SetElections",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+    ],
+    name: "SetPrice",
     type: "event",
   },
   {
@@ -262,6 +355,19 @@ export const abi = [
     name: "burn",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "elections",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -558,6 +664,19 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_elections",
+        type: "address",
+      },
+    ],
+    name: "setElections",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -670,6 +789,24 @@ export const abi = [
       },
     ],
     name: "transferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "transferLegendary",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

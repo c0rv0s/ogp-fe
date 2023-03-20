@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import {
   goerli,
   useAccount,
+  useContractRead,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -20,6 +21,14 @@ const Home: NextPage = () => {
 
   const { address } = useAccount();
   const { chain } = useNetwork();
+
+  const { data: supply, refetch } = useContractRead({
+    address: contractAddress(chain?.name),
+    abi,
+    functionName: "supply",
+    args: [0],
+  });
+
   const { config } = usePrepareContractWrite({
     address: contractAddress(chain?.name),
     abi,
@@ -49,6 +58,7 @@ const Home: NextPage = () => {
     const _async = async () => {
       if (isSuccess) {
         await data?.wait();
+        refetch();
         setCompleted(true);
         const jsConfetti = new JSConfetti();
         jsConfetti.addConfetti();
@@ -56,6 +66,8 @@ const Home: NextPage = () => {
     };
     _async();
   }, [isSuccess]);
+
+  console.log(supply?.toString());
 
   return (
     <div className={styles.container}>
@@ -102,6 +114,7 @@ const Home: NextPage = () => {
           {isTest && chain && chain?.id !== goerli.id && (
             <p className={styles.error}>Please switch network to Goerli</p>
           )}
+          <p>{supply?.toString()} / 3318 minted</p>
           {isSuccess ? (
             completed ? (
               <p>Minted!</p>
