@@ -4,8 +4,8 @@ export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === goerli.name
-    ? "0x17EF94358d7b9c2c69F77FB295A4FdcE552BE927"
-    : "0x17EF94358d7b9c2c69F77FB295A4FdcE552BE927";
+    ? "0xE94D1F19A60C29e0474a9868c1b76ae7477B7666"
+    : "0xAc02fd3b48e55E88F25b619db39fb24F6155d4C4";
 
 export const mintPrice = (network?: string) =>
   !network || network === goerli.name ? "0.0001" : "0.42";
@@ -30,6 +30,17 @@ export const abi = [
   {
     inputs: [],
     name: "AboveMaxSupply",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "AlreadyMinted",
     type: "error",
   },
   {
@@ -458,9 +469,9 @@ export const abi = [
         type: "address",
       },
       {
-        internalType: "enum Rarity",
-        name: "_rarity",
-        type: "uint8",
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
       },
     ],
     name: "mintVaulted",
@@ -670,6 +681,19 @@ export const abi = [
       },
     ],
     name: "setElections",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_owner",
+        type: "address",
+      },
+    ],
+    name: "setOwner",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

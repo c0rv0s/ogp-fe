@@ -14,6 +14,7 @@ import {
 import { abi, contractAddress, mintPrice, isTest } from "../src/contract";
 import styles from "../styles/Home.module.css";
 import JSConfetti from "js-confetti";
+import AdminPanel from "../src/AdminPanel";
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState(1);
@@ -67,8 +68,6 @@ const Home: NextPage = () => {
     _async();
   }, [isSuccess]);
 
-  console.log(supply?.toString());
-
   return (
     <div className={styles.container}>
       <Head>
@@ -105,16 +104,13 @@ const Home: NextPage = () => {
           <p>
             Total Price: {totalPrice.toFixed(4)} {constants.EtherSymbol}
           </p>
-          <button
-            disabled={!write || isLoading || chain?.id != 5}
-            onClick={() => write?.()}
-          >
+          <button disabled={!write || isLoading} onClick={() => write?.()}>
             Mint
           </button>
           {isTest && chain && chain?.id !== goerli.id && (
             <p className={styles.error}>Please switch network to Goerli</p>
           )}
-          <p>{supply?.toString()} / 3318 minted</p>
+          <p>{supply?.toString() ?? "0"} / 3318 minted</p>
           {isSuccess ? (
             completed ? (
               <p>Minted!</p>
@@ -125,6 +121,8 @@ const Home: NextPage = () => {
             <p className={styles.error}>Error: Something went wrong</p>
           ) : null}
         </div>
+
+        <AdminPanel />
       </main>
 
       <footer className={styles.footer}>
@@ -143,7 +141,7 @@ const Home: NextPage = () => {
         <a
           href={
             isTest
-              ? "https://testnets.opensea.io/collection/og-potheads-2"
+              ? "https://testnets.opensea.io/collection/og-potheads-4"
               : "https://opensea.io/collection/og-potheads"
           }
           rel="noopener noreferrer"
