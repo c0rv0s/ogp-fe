@@ -53,6 +53,13 @@ const AdminPanel: NextPage = () => {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     setLoaded(true);
+    fetch(
+      `https://hashvalley.4everland.link/ipfs/bafybeiaf2avnff2a6inotueqx2wmg26wbgrpskprfqpjhbd44kewhrg47y/0.json`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setTokenData(data);
+      });
   }, []);
 
   if (!loaded || !isAdmin) return null;
@@ -63,7 +70,7 @@ const AdminPanel: NextPage = () => {
       <div className={styles.grid}>
         <h4>Mint Vaulted</h4>
         <label>Enter a token id (0-981):</label>
-        <br/>
+        <br />
         <input
           type="number"
           placeholder="5"
@@ -74,7 +81,7 @@ const AdminPanel: NextPage = () => {
         />
         <br />
         <label>Enter an address to send to:</label>
-        <br/>
+        <br />
         <input
           placeholder="0x1234..."
           value={to}
@@ -94,10 +101,7 @@ const AdminPanel: NextPage = () => {
             <h4>{tokenData.name}</h4>
           </div>
         )}
-        <button
-          disabled={!write || isLoading || !to }
-          onClick={() => write?.()}
-        >
+        <button disabled={!write || isLoading || !to} onClick={() => write?.()}>
           Mint
         </button>
       </div>

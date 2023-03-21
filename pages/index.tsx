@@ -68,6 +68,12 @@ const Home: NextPage = () => {
     _async();
   }, [isSuccess]);
 
+  // for hydration
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -107,10 +113,7 @@ const Home: NextPage = () => {
           <button disabled={!write || isLoading} onClick={() => write?.()}>
             Mint
           </button>
-          {isTest && chain && chain?.id !== goerli.id && (
-            <p className={styles.error}>Please switch network to Goerli</p>
-          )}
-          <p>{supply?.toString() ?? "0"} / 3318 minted</p>
+          <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3318 minted</p>
           {isSuccess ? (
             completed ? (
               <p>Minted!</p>
