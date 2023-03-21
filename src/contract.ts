@@ -1,14 +1,14 @@
-import { goerli } from "wagmi";
+import { mainnet } from "wagmi";
 
 export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
 
 export const contractAddress = (network?: string): `0x${string}` =>
-  !network || network === goerli.name
-    ? "0xE94D1F19A60C29e0474a9868c1b76ae7477B7666"
-    : "0xAc02fd3b48e55E88F25b619db39fb24F6155d4C4";
+  !network || network === mainnet.name
+    ? "0xAc02fd3b48e55E88F25b619db39fb24F6155d4C4"
+    : "0xE94D1F19A60C29e0474a9868c1b76ae7477B7666";
 
 export const mintPrice = (network?: string) =>
-  !network || network === goerli.name ? "0.0001" : "0.42";
+  !network || network === mainnet.name ? "0.42" : "0.0001";
 
 export const abi = [
   {

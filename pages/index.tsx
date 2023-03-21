@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
-  goerli,
+  mainnet,
   useAccount,
   useContractRead,
   useContractWrite,
@@ -45,11 +45,10 @@ const Home: NextPage = () => {
   // etherscan url
   const [etherscsanUrl, setEtherscan] = useState("");
   useEffect(() => {
-    setTotalPrice(Number(mintPrice(chain?.name ?? goerli.name)) * amount);
+    setTotalPrice(Number(mintPrice(chain?.name)) * amount);
     setEtherscan(
-      chain?.blockExplorers?.default.url +
-        "/address/" +
-        contractAddress(chain?.name)
+      chain?.blockExplorers?.default.url ??
+        "https://etherscan.io/" + "/address/" + contractAddress(chain?.name)
     );
   }, [amount, chain]);
 
