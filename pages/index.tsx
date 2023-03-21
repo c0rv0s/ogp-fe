@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
+  goerli,
   mainnet,
   useAccount,
   useContractRead,
@@ -42,14 +43,9 @@ const Home: NextPage = () => {
   const { isLoading, isSuccess, isError, write, data } =
     useContractWrite(config);
 
-  // etherscan url
-  const [etherscsanUrl, setEtherscan] = useState("");
+  // total price
   useEffect(() => {
     setTotalPrice(Number(mintPrice(chain?.name)) * amount);
-    setEtherscan(
-      chain?.blockExplorers?.default.url ??
-        "https://etherscan.io/" + "/address/" + contractAddress(chain?.name)
-    );
   }, [amount, chain]);
 
   // tx completed
@@ -136,7 +132,17 @@ const Home: NextPage = () => {
           OG Pothead
         </a>
         |
-        <a href={etherscsanUrl} rel="noopener noreferrer" target="_blank">
+        <a
+          href={
+            isTest
+              ? `https://goerli.etherscan.io/address/${contractAddress(
+                  goerli.name
+                )}}`
+              : `https://etherscan.io/address/${contractAddress(mainnet.name)}}`
+          }
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           Etherscan
         </a>
         |

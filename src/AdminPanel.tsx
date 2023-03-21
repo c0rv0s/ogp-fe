@@ -8,7 +8,7 @@ import {
   useNetwork,
   usePrepareContractWrite,
 } from "wagmi";
-import { abi, contractAddress } from "../src/contract";
+import { abi, contractAddress, metadata } from "../src/contract";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 
@@ -40,9 +40,7 @@ const AdminPanel: NextPage = () => {
     const value = Number(e.target.value);
     if (value >= 0 && value <= 981) {
       setTokenId(value);
-      fetch(
-        `https://hashvalley.4everland.link/ipfs/bafybeiaf2avnff2a6inotueqx2wmg26wbgrpskprfqpjhbd44kewhrg47y/${value}.json`
-      )
+      fetch(`https://hashvalley.4everland.link/ipfs/${metadata}/${value}.json`)
         .then((res) => res.json())
         .then((data) => {
           setTokenData(data);
@@ -53,9 +51,7 @@ const AdminPanel: NextPage = () => {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     setLoaded(true);
-    fetch(
-      `https://hashvalley.4everland.link/ipfs/bafybeiaf2avnff2a6inotueqx2wmg26wbgrpskprfqpjhbd44kewhrg47y/0.json`
-    )
+    fetch(`https://hashvalley.4everland.link/ipfs/${metadata}/0.json`)
       .then((res) => res.json())
       .then((data) => {
         setTokenData(data);
