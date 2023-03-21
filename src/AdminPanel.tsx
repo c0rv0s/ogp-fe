@@ -41,7 +41,7 @@ const AdminPanel: NextPage = () => {
     if (value >= 0 && value <= 981) {
       setTokenId(value);
       fetch(
-        `https://hashvalley.4everland.link/ipfs/bafybeiaf2avnff2a6inotueqx2wmg26wbgrpskprfqpjhbd44kewhrg47y/${tokenId}.json`
+        `https://hashvalley.4everland.link/ipfs/bafybeiaf2avnff2a6inotueqx2wmg26wbgrpskprfqpjhbd44kewhrg47y/${value}.json`
       )
         .then((res) => res.json())
         .then((data) => {
