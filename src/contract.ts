@@ -2,7 +2,7 @@ import { mainnet } from "wagmi";
 
 export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
 
-export const metadata = 'bafybeibqusz4ke4msfwvqif2yvntao6rh4rz5wvuqjwt4ja7a3x37khxcm'
+export const metadata = 'bafybeidmhkdn7c5pizkmb4ezenrhjt74agpprihondihhrhb5mc3prsizm'
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === mainnet.name
