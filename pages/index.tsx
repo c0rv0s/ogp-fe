@@ -137,8 +137,8 @@ const Home: NextPage = () => {
             isTest
               ? `https://goerli.etherscan.io/address/${contractAddress(
                   goerli.name
-                )}}`
-              : `https://etherscan.io/address/${contractAddress(mainnet.name)}}`
+                )}`
+              : `https://etherscan.io/address/${contractAddress(mainnet.name)}`
           }
           rel="noopener noreferrer"
           target="_blank"
