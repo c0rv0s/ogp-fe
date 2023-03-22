@@ -32,8 +32,15 @@ const AdminPanel: NextPage = () => {
     functionName: "mintVaulted",
     args: [to, tokenId],
   });
-  const { isLoading, isSuccess, isError, write, data } =
-    useContractWrite(config);
+  const { isLoading, write } = useContractWrite(config);
+
+  const { config: withdrawConfig } = usePrepareContractWrite({
+    address: contractAddress(chain?.name),
+    abi,
+    functionName: "withdrawAll",
+  });
+  const { isLoading: isLoadingWithdraw, write: writeWithdraw } =
+    useContractWrite(withdrawConfig);
 
   const [tokenData, setTokenData] = useState<any>(null);
   const onChangeTokenId = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +106,14 @@ const AdminPanel: NextPage = () => {
         )}
         <button disabled={!write || isLoading || !to} onClick={() => write?.()}>
           Mint
+        </button>
+        <br />
+        <h4>Withdraw ETH from contract</h4>
+        <button
+          disabled={!writeWithdraw || isLoadingWithdraw}
+          onClick={() => writeWithdraw?.()}
+        >
+          Withdraw
         </button>
       </div>
     </div>
