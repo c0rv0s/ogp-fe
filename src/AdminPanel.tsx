@@ -89,7 +89,7 @@ const AdminPanel: NextPage = () => {
             <Image
               src={
                 "https://hashvalley.4everland.link/ipfs/" +
-                tokenData?.image.substring(7)
+                tokenData?.image.substring(7).replace("#", "%23")
               }
               height={150}
               width={150}
