@@ -8,7 +8,7 @@ import {
   useNetwork,
   usePrepareContractWrite,
 } from "wagmi";
-import { abi, contractAddress, metadata } from "../src/contract";
+import { abi, contractAddress, gateway, metadata } from "../src/contract";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 
@@ -45,20 +45,18 @@ const AdminPanel: NextPage = () => {
   const [tokenData, setTokenData] = useState<any>(null);
   const onChangeTokenId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    if (value >= 0 && value <= 981) {
-      setTokenId(value);
-      fetch(`https://hashvalley.4everland.link/ipfs/${metadata}/${value}.json`)
-        .then((res) => res.json())
-        .then((data) => {
-          setTokenData(data);
-        });
-    }
+    setTokenId(value);
+    fetch(`${gateway}/${metadata(value)}/${value}.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTokenData(data);
+      });
   };
 
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     setLoaded(true);
-    fetch(`https://hashvalley.4everland.link/ipfs/${metadata}/0.json`)
+    fetch(`${gateway}/${metadata(0)}/0.json`)
       .then((res) => res.json())
       .then((data) => {
         setTokenData(data);
@@ -72,7 +70,8 @@ const AdminPanel: NextPage = () => {
       <br />
       <div className={styles.grid}>
         <h4>Mint Vaulted</h4>
-        <label>Enter a token id (0-981):</label>
+        <p>Enter any token id (0-4419) to preview</p>
+        <label>Enter a vaulted token id (0-1301) to mint:</label>
         <br />
         <input
           type="number"
@@ -80,7 +79,7 @@ const AdminPanel: NextPage = () => {
           value={tokenId}
           onChange={onChangeTokenId}
           min={0}
-          max={981}
+          max={4419}
         />
         <br />
         <label>Enter an address to send to:</label>
@@ -93,18 +92,30 @@ const AdminPanel: NextPage = () => {
         <br />
         {tokenData && (
           <div>
-            <Image
-              src={
+            <a
+              href={
                 "https://hashvalley.4everland.link/ipfs/" +
                 tokenData?.image.substring(7).replace("#", "%23")
               }
-              height={150}
-              width={150}
-            />
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image
+                src={
+                  "https://hashvalley.4everland.link/ipfs/" +
+                  tokenData?.image.substring(7).replace("#", "%23")
+                }
+                height={150}
+                width={150}
+              />
+            </a>
             <h4>{tokenData.name}</h4>
           </div>
         )}
-        <button disabled={!write || isLoading || !to} onClick={() => write?.()}>
+        <button
+          disabled={!write || isLoading || !to || Number(tokenId) > 1301}
+          onClick={() => write?.()}
+        >
           Mint
         </button>
         <br />

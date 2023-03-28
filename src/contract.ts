@@ -1,14 +1,22 @@
 import { mainnet } from "wagmi";
 
-export const isTest = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true";
+export const gateway = "https://hashvalley.4everland.link/ipfs";
 
-export const metadata =
-  "bafybeicoqj6xsnlovpgqfp376l6sbfqh55ki7dsu4borctgl73dsoszabu";
+export const metadata = (tokenId: number) => {
+  if (tokenId < 42)
+    // legendary
+    return "bafybeidfyqjuoyxai7bm7emrdv3i5yv2synzaugjrqrm6o3vkb2bv3ytd4";
+  else if (tokenId < 462)
+    // ultra rare
+    return "bafybeiazvv76n5jua3a4imrws4qgf3a4ydvs6zqgxg3voxzhfdb7ii4ghm";
+  // everything else
+  else return "bafybeicias7yuzsm4o6unthpl5hmetovmbxg7me2ltqa6pwfm52ziwidyu";
+};
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === mainnet.name
     ? "0xAc02fd3b48e55E88F25b619db39fb24F6155d4C4"
-    : "0xE94D1F19A60C29e0474a9868c1b76ae7477B7666";
+    : "0x79438D316d2893E6793Faa4886DD0583bB7e752a";
 
 export const mintPrice = (network?: string) =>
   !network || network === mainnet.name ? "0.42" : "0.0001";
@@ -17,14 +25,34 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_baseUri",
-        type: "string",
-      },
-      {
         internalType: "uint256",
         name: "_price",
         type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_baseUriCommon",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_baseUriRare",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_baseUriSuperRare",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_baseUriUltraRare",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_baseUriLegendary",
+        type: "string",
       },
     ],
     stateMutability: "nonpayable",
@@ -216,6 +244,12 @@ export const abi = [
         name: "baseUri",
         type: "string",
       },
+      {
+        indexed: false,
+        internalType: "enum Rarity",
+        name: "rarity",
+        type: "uint8",
+      },
     ],
     name: "SetBaseURI",
     type: "event",
@@ -346,8 +380,14 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "baseUri",
+    inputs: [
+      {
+        internalType: "enum Rarity",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    name: "baseUris",
     outputs: [
       {
         internalType: "string",
@@ -650,6 +690,11 @@ export const abi = [
         internalType: "string",
         name: "_baseUri",
         type: "string",
+      },
+      {
+        internalType: "enum Rarity",
+        name: "_rarity",
+        type: "uint8",
       },
     ],
     name: "setBaseUri",

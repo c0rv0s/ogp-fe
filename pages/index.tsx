@@ -12,10 +12,17 @@ import {
   useNetwork,
   usePrepareContractWrite,
 } from "wagmi";
-import { abi, contractAddress, mintPrice, isTest } from "../src/contract";
+import {
+  abi,
+  contractAddress,
+  gateway,
+  metadata,
+  mintPrice,
+} from "../src/contract";
 import styles from "../styles/Home.module.css";
 import JSConfetti from "js-confetti";
 import AdminPanel from "../src/AdminPanel";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState(1);
@@ -50,14 +57,21 @@ const Home: NextPage = () => {
 
   // tx completed
   const [completed, setCompleted] = useState(false);
+  const [tokenData, setTokenData] = useState<any>(null);
   useEffect(() => {
     const _async = async () => {
       if (isSuccess) {
         await data?.wait();
-        refetch();
+        const tokenId = Number(supply) + 1302;
         setCompleted(true);
         const jsConfetti = new JSConfetti();
         jsConfetti.addConfetti();
+        fetch(`${gateway}/${metadata(tokenId)}/${tokenId}.json`)
+          .then((res) => res.json())
+          .then((data) => {
+            setTokenData(data);
+          });
+        await refetch();
       }
     };
     _async();
@@ -105,13 +119,60 @@ const Home: NextPage = () => {
           <p>
             Total Price: {totalPrice.toFixed(4)} {constants.EtherSymbol}
           </p>
-          <button disabled={!write || isLoading} onClick={() => write?.()}>
+          <button
+            disabled={!write || isLoading}
+            onClick={() => {
+              setCompleted(false);
+              setTokenData(null);
+              write?.();
+            }}
+          >
             Mint
           </button>
-          <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3318 minted</p>
+          <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3118 minted</p>
           {isSuccess ? (
             completed ? (
-              <p>Minted!</p>
+              <>
+                <p>Minted!</p>
+                {tokenData && (
+                  <div>
+                    <a
+                      href={
+                        "https://hashvalley.4everland.link/ipfs/" +
+                        tokenData?.image.substring(7).replace("#", "%23")
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        src={
+                          "https://hashvalley.4everland.link/ipfs/" +
+                          tokenData?.image.substring(7).replace("#", "%23")
+                        }
+                        height={150}
+                        width={150}
+                      />
+                    </a>
+                    <h4>{tokenData.name}</h4>
+                    <a
+                      href={
+                        !chain || chain?.name === mainnet.name
+                          ? `https://opensea.io/assets/goerli/${contractAddress(
+                              mainnet.name
+                            )}/${Number(supply) + 1301}`
+                          : `https://testnets.opensea.io/assets/goerli/${contractAddress(
+                              goerli.name
+                            )}/${Number(supply) + 1301}`
+                      }
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      style={{ textDecoration: "underline" }}
+                    >
+                      View on OpenSea
+                    </a>
+                  </div>
+                )}
+              </>
             ) : (
               <p>Minting...</p>
             )
@@ -124,39 +185,47 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="http://ogpothead.com/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          OG Pothead
-        </a>
-        |
-        <a
-          href={
-            isTest
-              ? `https://goerli.etherscan.io/address/${contractAddress(
-                  goerli.name
-                )}`
-              : `https://etherscan.io/address/${contractAddress(mainnet.name)}`
-          }
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Etherscan
-        </a>
-        |
-        <a
-          href={
-            isTest
-              ? "https://testnets.opensea.io/collection/og-potheads-4"
-              : "https://opensea.io/collection/og-potheads"
-          }
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          OpenSea
-        </a>
+        {loaded ? (
+          <>
+            <a
+              href="http://ogpothead.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              OG Pothead
+            </a>
+            |
+            <a
+              href={
+                !chain || chain?.name === mainnet.name
+                  ? `https://etherscan.io/address/${contractAddress(
+                      mainnet.name
+                    )}`
+                  : `https://goerli.etherscan.io/address/${contractAddress(
+                      goerli.name
+                    )}`
+              }
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Etherscan
+            </a>
+            |
+            <a
+              href={
+                !chain || chain?.name === mainnet.name
+                  ? "https://opensea.io/collection/og-potheads"
+                  : "https://testnets.opensea.io/collection/og-potheads-7"
+              }
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              OpenSea
+            </a>
+          </>
+        ) : (
+          <>...</>
+        )}
       </footer>
     </div>
   );
