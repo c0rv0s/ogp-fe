@@ -90,8 +90,16 @@ const Home: NextPage = () => {
         <meta content="Join the OG Potheads community" name="OG Potheads" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{marginTop: '36px'}}><ConnectButton /></div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ marginTop: "36px" }}>
+          <ConnectButton />
+        </div>
       </div>
 
       <main className={styles.main}>
@@ -101,6 +109,7 @@ const Home: NextPage = () => {
           <p className={styles.description}>
             <i>Drink your worth</i>
           </p>
+          <p style={{ marginTop: "-10px" }}>&#x2726;</p>
           <h4>Enter an amount</h4>
           <input
             type="number"
