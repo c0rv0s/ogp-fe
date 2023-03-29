@@ -94,7 +94,8 @@ const AdminPanel: NextPage = () => {
           <div>
             <a
               href={
-                "https://hashvalley.4everland.link/ipfs/" +
+                gateway +
+                "/" +
                 tokenData?.image.substring(7).replace("#", "%23")
               }
               target="_blank"
@@ -102,7 +103,8 @@ const AdminPanel: NextPage = () => {
             >
               <Image
                 src={
-                  "https://hashvalley.4everland.link/ipfs/" +
+                  gateway +
+                  "/" +
                   tokenData?.image.substring(7).replace("#", "%23")
                 }
                 height={150}

@@ -87,25 +87,20 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Head>
         <title>OG Potheads</title>
-        <meta
-          content="Join the OG Potheads community and mint an OG Pothead NFT."
-          name="OG Potheads"
-        />
+        <meta content="Join the OG Potheads community" name="OG Potheads" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{marginTop: '36px'}}><ConnectButton /></div>
+      </div>
 
       <main className={styles.main}>
-        <ConnectButton />
-
-        <h1 className={styles.title}>OG Potheads</h1>
-
-        <p className={styles.description}>
-          OG Potheads is a community of OG Potheads who are OG Potheads.
-          <br />
-          Mint one of our OG Pothead NFTs and become an OG Pothead.
-        </p>
-
         <div className={styles.grid}>
+          <h1 className={styles.title}>OG Potheads</h1>
+
+          <p className={styles.description}>
+            <i>Drink your worth</i>
+          </p>
           <h4>Enter an amount</h4>
           <input
             type="number"
@@ -138,7 +133,7 @@ const Home: NextPage = () => {
                   <div>
                     <a
                       href={
-                        "https://hashvalley.4everland.link/ipfs/" +
+                        "https://ogpotheads.4everland.link/ipfs/" +
                         tokenData?.image.substring(7).replace("#", "%23")
                       }
                       target="_blank"
@@ -146,7 +141,7 @@ const Home: NextPage = () => {
                     >
                       <Image
                         src={
-                          "https://hashvalley.4everland.link/ipfs/" +
+                          "https://ogpotheads.4everland.link/ipfs/" +
                           tokenData?.image.substring(7).replace("#", "%23")
                         }
                         height={150}

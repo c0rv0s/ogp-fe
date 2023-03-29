@@ -1,6 +1,6 @@
 import { mainnet } from "wagmi";
 
-export const gateway = "https://hashvalley.4everland.link/ipfs";
+export const gateway = "https://ogpotheads.4everland.link/ipfs";
 
 export const metadata = (tokenId: number) => {
   if (tokenId < 42)

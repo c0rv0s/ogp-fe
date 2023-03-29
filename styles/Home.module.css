@@ -3,7 +3,7 @@
 }
 
 .main {
-  min-height: 100vh;
+  height: calc(100vh - 36px);
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -16,9 +16,10 @@
   display: flex;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid lightgray;
+  /* border-top: 1px solid black; */
   justify-content: center;
   align-items: center;
+  color: black;
 }
 
 .footer a {
@@ -66,10 +67,13 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 1000px;
+  min-width: 400px;
   border: rgba(128, 128, 128, 0.442) 1px solid;
   border-radius: 15%;
   padding: 25px 55px;
+  background-color: rgb(244, 239, 225);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card {

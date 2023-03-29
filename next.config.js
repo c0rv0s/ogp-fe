@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'hashvalley.4everland.link',
+        hostname: 'ogpotheads.4everland.link',
         port: '',
         pathname: '/ipfs/**',
       },
