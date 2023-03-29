@@ -109,7 +109,7 @@ const Home: NextPage = () => {
           <p className={styles.description}>
             <i>Drink your worth</i>
           </p>
-          <p style={{ marginTop: "-10px" }}>&#x2726;</p>
+          <p style={{ marginTop: "-6px" }}>&#x2726;</p>
           <h4>Enter an amount</h4>
           <input
             type="number"
