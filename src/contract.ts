@@ -15,7 +15,7 @@ export const metadata = (tokenId: number) => {
 
 export const contractAddress = (network?: string): `0x${string}` =>
   !network || network === mainnet.name
-    ? "0xAc02fd3b48e55E88F25b619db39fb24F6155d4C4"
+    ? "0xF7F04DEa9c50E1297198b4644E872E9C150e9B0D"
     : "0x79438D316d2893E6793Faa4886DD0583bB7e752a";
 
 export const mintPrice = (network?: string) =>
