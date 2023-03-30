@@ -65,13 +65,13 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 1000px;
-  min-width: 400px;
+  max-width: 600;
   border: rgba(128, 128, 128, 0.442) 1px solid;
-  border-radius: 15%;
-  padding: 25px 55px;
+  border-radius: 40px;
+  padding: 20px 60px;
   background-color: rgb(244, 239, 225);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 16px;
 }
 
 .card {
