@@ -38,6 +38,9 @@ const AdminPanel: NextPage = () => {
     address: contractAddress(chain?.name),
     abi,
     functionName: "withdrawAll",
+    overrides: {
+      value: 0,
+    },
   });
   const { isLoading: isLoadingWithdraw, write: writeWithdraw } =
     useContractWrite(withdrawConfig);
