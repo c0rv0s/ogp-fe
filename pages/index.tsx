@@ -23,12 +23,16 @@ import styles from "../styles/Home.module.css";
 import JSConfetti from "js-confetti";
 import AdminPanel from "../src/AdminPanel";
 import Image from "next/image";
+import { useBalance } from "wagmi";
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const { address } = useAccount();
+  const { data: balance } = useBalance({
+    address,
+  });
   const { chain } = useNetwork();
 
   const { data: supply, refetch } = useContractRead({
@@ -121,7 +125,7 @@ const Home: NextPage = () => {
           />
           <br />
           <p>
-            Total Price: {totalPrice.toFixed(4)} {constants.EtherSymbol}
+            Total Price: {totalPrice.toFixed(2)} {constants.EtherSymbol}
           </p>
           <button
             disabled={!write || isLoading}
@@ -131,7 +135,9 @@ const Home: NextPage = () => {
               write?.();
             }}
           >
-            Mint
+            {Number(balance?.formatted) < totalPrice
+              ? "Insufficent Funds"
+              : "Mint"}
           </button>
           <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3118 minted</p>
           {isSuccess ? (

@@ -19,7 +19,7 @@ export const contractAddress = (network?: string): `0x${string}` =>
     : "0x79438D316d2893E6793Faa4886DD0583bB7e752a";
 
 export const mintPrice = (network?: string) =>
-  !network || network === mainnet.name ? "0.42" : "0.0001";
+  !network || network === mainnet.name ? "0.42" : "0.01";
 
 export const abi = [
   {
