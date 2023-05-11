@@ -87,6 +87,8 @@ const Home: NextPage = () => {
     setLoaded(true);
   }, []);
 
+  const airdropAmount = (amount: number) => amount * 10000000;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -139,6 +141,9 @@ const Home: NextPage = () => {
               ? "Insufficent Funds"
               : "Mint"}
           </button>
+          <p style={{color: "green"}}>
+            Bonus - {airdropAmount(amount).toLocaleString()} $OGPH 🍀
+          </p>
           <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3118 minted</p>
           {isSuccess ? (
             completed ? (
@@ -218,7 +223,15 @@ const Home: NextPage = () => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              Etherscan
+              NFT
+            </a>
+            |
+            <a
+              href="https://etherscan.io/token/0xc0baacb079095f6dbdeac6896ce946107cf3de80"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              OGPH Token
             </a>
             |
             <a
