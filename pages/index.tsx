@@ -3,6 +3,7 @@ import { useNetwork } from "wagmi";
 import Babies from "../src/Babies";
 import Mainnet from "../src/Mainnet";
 import { useEffect, useState } from "react";
+import NoWallet from "../src/NoWallet";
 
 const Home: NextPage = () => {
   const { chain } = useNetwork();
@@ -16,7 +17,7 @@ const Home: NextPage = () => {
 
   if (loaded && chain?.name === "zkSync") return <Babies />;
   else if (loaded) return <Mainnet />;
-  else return null;
+  else return <NoWallet />;
 };
 
 export default Home;
