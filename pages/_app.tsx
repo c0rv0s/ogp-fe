@@ -9,7 +9,7 @@ import { publicProvider } from "wagmi/providers/public";
 const { chains, provider, webSocketProvider } = configureChains(
   [
     mainnet,
-    zkSync,
+    ...(process.env.NEXT_PUBLIC_ENABLE_ZK === "true" ? [zkSync] : []),
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
   ],
   [publicProvider()]
