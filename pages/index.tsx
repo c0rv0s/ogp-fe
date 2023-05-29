@@ -8,6 +8,7 @@ import NoWallet from "../src/NoWallet";
 const Home: NextPage = () => {
   const { chain } = useNetwork();
   const [loaded, setLoaded] = useState(false);
+  const [collection, setCollection] = useState<"original" | "babies">("original");
 
   useEffect(() => {
     if (chain) {
@@ -15,8 +16,8 @@ const Home: NextPage = () => {
     }
   }, [chain]);
 
-  if (loaded && chain?.name === "zkSync") return <Babies />;
-  else if (loaded) return <Mainnet />;
+  if (loaded && (collection === "babies" || chain?.name === "zkSync")) return <Babies setCollection={setCollection} />;
+  else if (loaded && collection === "original") return <Mainnet setCollection={setCollection} />;
   else return <NoWallet />;
 };
 

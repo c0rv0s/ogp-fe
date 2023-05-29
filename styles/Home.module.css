@@ -122,6 +122,30 @@
   outline: none;
 }
 
+.switcher button {
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  font-size: large;
+  border-radius: 16px;
+  padding: 12px 20px;
+  margin: 12px 0;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  transition: all 0.15s ease;
+  width: 250px;
+}
+
+.switcher button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.switcher button:hover:enabled {
+  background-color: #45a049;
+}
+
 .grid button {
   background-color: #4caf50;
   color: white;

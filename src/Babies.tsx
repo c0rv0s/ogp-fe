@@ -16,11 +16,10 @@ import JSConfetti from "js-confetti";
 import Image from "next/image";
 import { useBalance } from "wagmi";
 
-const contractAddress = "0x9b7193Fe11c9dC04B2363a84A70Bd5e4F68E1FEB";
 const mintPrice = "0.0042";
 const metadata = "bafybeicpc67b6lrbjiileqxgl3p25mdoinj4uscopdlwja5tprqcy566dq";
 
-const Babies: NextPage = () => {
+const Babies = ({ setCollection }: { setCollection: any }) => {
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -29,6 +28,11 @@ const Babies: NextPage = () => {
     address,
   });
   const { chain } = useNetwork();
+
+  const contractAddress =
+    chain?.name === "zkSync"
+      ? "0x9b7193Fe11c9dC04B2363a84A70Bd5e4F68E1FEB"
+      : "0xbeE7aB427505eFF93409f96942aE9Fa5a25a0555";
 
   const { data: supply, refetch } = useContractRead({
     address: contractAddress,
@@ -101,6 +105,25 @@ const Babies: NextPage = () => {
           <ConnectButton />
         </div>
       </div>
+
+      {chain?.name !== "zkSync" && (
+        <div
+          className={styles.switcher}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "0 0 -72px 0",
+          }}
+        >
+          <button
+            className="switch-button"
+            onClick={() => setCollection("original")}
+          >
+            View Original
+          </button>
+        </div>
+      )}
 
       <main className={styles.main}>
         <div className={styles.grid}>

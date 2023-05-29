@@ -12,20 +12,14 @@ import {
   useNetwork,
   usePrepareContractWrite,
 } from "wagmi";
-import {
-  abi,
-  contractAddress,
-  gateway,
-  metadata,
-  mintPrice,
-} from "./contract";
+import { abi, contractAddress, gateway, metadata, mintPrice } from "./contract";
 import styles from "../styles/Home.module.css";
 import JSConfetti from "js-confetti";
 import AdminPanel from "./AdminPanel";
 import Image from "next/image";
 import { useBalance } from "wagmi";
 
-const Mainnet: NextPage = () => {
+const Mainnet = ({ setCollection }: { setCollection: any }) => {
   const { chain } = useNetwork();
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -108,6 +102,22 @@ const Mainnet: NextPage = () => {
         </div>
       </div>
 
+      {process.env.NEXT_PUBLIC_ENABLE_BABIES === "true" && (
+        <div
+          className={styles.switcher}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "0 0 -72px 0",
+          }}
+        >
+          <button onClick={() => setCollection("babies")}>
+            Now Minting - Babies
+          </button>
+        </div>
+      )}
+
       <main className={styles.main}>
         <div className={styles.grid}>
           <h1 className={styles.title}>OG Potheads</h1>
@@ -141,7 +151,7 @@ const Mainnet: NextPage = () => {
               ? "Insufficent Funds"
               : "Mint"}
           </button>
-          <p style={{color: "green"}}>
+          <p style={{ color: "green" }}>
             Bonus - {airdropAmount(amount).toLocaleString()} $OGPH 🍀
           </p>
           <p>{loaded ? supply?.toString() : "-" ?? "0"} / 3118 minted</p>
