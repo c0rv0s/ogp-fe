@@ -117,7 +117,7 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
             className="switch-button"
             onClick={() => setCollection("original")}
           >
-            View Original
+            View OGs
           </button>
         </div>
       )}
@@ -203,7 +203,11 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
             </a>
             |
             <a
-              href="https://explorer.zksync.io/address/0x9b7193Fe11c9dC04B2363a84A70Bd5e4F68E1FEB#transactions"
+              href={
+                chain?.name === "zkSync"
+                  ? "https://explorer.zksync.io/address/0x9b7193Fe11c9dC04B2363a84A70Bd5e4F68E1FEB#transactions"
+                  : `https://etherscan.io/address/${contractAddress}`
+              }
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -218,8 +222,16 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
               OGPH Token
             </a>
             |
-            <a href="" rel="noopener noreferrer" target="_blank">
-              Marketplace (coming soon)
+            <a
+              href={
+                chain?.name === "zkSync"
+                  ? ""
+                  : "https://opensea.io/collection/baby-og-potheads"
+              }
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {"Marketplace" + chain?.name === "zkSync" && " (coming soon)"}
             </a>
           </>
         ) : (
