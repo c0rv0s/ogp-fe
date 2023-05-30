@@ -1,6 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { constants, utils } from "ethers";
-import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
@@ -102,21 +101,19 @@ const Mainnet = ({ setCollection }: { setCollection: any }) => {
         </div>
       </div>
 
-      {process.env.NEXT_PUBLIC_ENABLE_BABIES === "true" && (
-        <div
-          className={styles.switcher}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "0 0 -72px 0",
-          }}
-        >
-          <button onClick={() => setCollection("babies")}>
-            Now Minting - Babies
-          </button>
-        </div>
-      )}
+      <div
+        className={styles.switcher}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 0 -72px 0",
+        }}
+      >
+        <button onClick={() => setCollection("babies")}>
+          Now Minting - Babies
+        </button>
+      </div>
 
       <main className={styles.main}>
         <div className={styles.grid}>

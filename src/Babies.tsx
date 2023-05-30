@@ -1,6 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { constants, utils } from "ethers";
-import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
@@ -84,8 +83,6 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
   useEffect(() => {
     setLoaded(true);
   }, []);
-
-  const airdropAmount = (amount: number) => amount * 10000000;
 
   return (
     <div className={styles.container}>
