@@ -231,7 +231,9 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              Marketplace {chain?.name === "zkSync" && "(coming soon)"}
+              {chain?.name === "zkSync"
+                ? "Marketplace (coming soon)"
+                : "OpenSea"}
             </a>
           </>
         ) : (
