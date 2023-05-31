@@ -124,7 +124,7 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-          <h1 className={styles.title}>Baby OG Pothead</h1>
+          <h1 className={styles.title}>Baby OG Potheads</h1>
 
           <p className={styles.description}>
             <i>Indulge Sustainably</i>
