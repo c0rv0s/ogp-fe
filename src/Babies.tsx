@@ -231,7 +231,7 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              {"Marketplace" + chain?.name === "zkSync" && " (coming soon)"}
+              Marketplace {chain?.name === "zkSync" && "(coming soon)"}
             </a>
           </>
         ) : (
