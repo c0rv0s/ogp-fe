@@ -225,15 +225,13 @@ const Babies = ({ setCollection }: { setCollection: any }) => {
             <a
               href={
                 chain?.name === "zkSync"
-                  ? ""
+                  ? "https://element.market/collections/baby-og-potheads-4537e7?search%5Btoggles%5D%5B0%5D=BUY_NOW"
                   : "https://opensea.io/collection/baby-og-potheads"
               }
               rel="noopener noreferrer"
               target="_blank"
             >
-              {chain?.name === "zkSync"
-                ? "Marketplace (coming soon)"
-                : "OpenSea"}
+              {chain?.name === "zkSync" ? "Marketplace" : "OpenSea"}
             </a>
           </>
         ) : (
